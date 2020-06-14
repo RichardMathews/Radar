@@ -12,6 +12,8 @@ const server = http.Server(app);
 setupWebsocket(server);
 
 //Mongodb Atlas
+//Para que funcione o backend é necessario ter uma conta no mongodb Atlas e substituir <username> e <password> 
+//pelo seu login e senhao do mesmo. Onde esta <MapApp> é o nome do banco de dados.
 mongoose.connect('mongodb+srv://<username>:<password>@cluster0-seyp3.mongodb.net/<MapAPP>?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
