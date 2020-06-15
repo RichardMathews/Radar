@@ -1,23 +1,27 @@
-import React, { useState } from 'react';
-// import api from '../services/api';
+import React, { useState, Component } from 'react';
+import api from '../services/api';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
 
-function SignUp({ navigation }) {
-  // const [email, setEmail] = useState('');
-  // const [name, setName] = useState('');
-  // const [password, setPassword] = useState('');
-  
-  // async function newUser({ navigation }) {
-  //   const response = await api.post('/users', {
-  //     email,
-  //     name,
-  //     password,
-  //    });
+class SignUp extends Component{
+  state = {
+    email,
+    name,
+    password,
+    // avatar_url,
+    
+  }
 
-  //   console.log(response.data.users);
-  //   response.data.users;
-  // }
+  onRequest = async () => {
+    try {
+      const res = await api.post('/users', {...this.state});
+      console.log(res.data)
+      return res.data;
+    } catch (error) {
+      console.log('error:', error);
+    }
+}
 
+  render () {
   return( 
     <>
       <Image style={styles.avatar} source={{ uri: 'https://api.adorable.io/avatars/400/abott@adorable.io.png'}} />
@@ -29,8 +33,7 @@ function SignUp({ navigation }) {
             autoCapitalize="words"
             autoCorrect={false}
             required
-            // value={email}
-            // onChange={setEmail}
+            // value={this.state.email}
           />
       </View>
 
@@ -43,7 +46,6 @@ function SignUp({ navigation }) {
             autoCorrect={false}
             required
             // value={name}
-            // onChange={setName}
           />
       </View>
 
@@ -56,7 +58,6 @@ function SignUp({ navigation }) {
             autoCorrect={false}
             required
             // value={password}
-            // onChange={setPassword}
           />
       </View>
 
@@ -64,12 +65,12 @@ function SignUp({ navigation }) {
         <Text  size={30} color="#fff">Já tenho conta</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.loadSingUp}  onPress={() => {}}>  
+      <TouchableOpacity style={styles.loadSingUp}  onPress={this.onRequest}>  
         <Text  size={30} color="#fff">Criar Conta</Text>
       </TouchableOpacity>
   </>
     );
-}
+}}
 
 export default SignUp;
 const styles = StyleSheet.create({
