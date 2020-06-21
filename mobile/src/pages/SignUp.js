@@ -1,27 +1,23 @@
-import React, { useState, Component } from 'react';
+import React, { useState } from 'react';
 import api from '../services/api';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
 
-class SignUp extends Component{
-  state = {
-    email,
-    name,
-    password,
-    // avatar_url,
-    
-  }
+export default function SignUp() {
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
 
   onRequest = async () => {
-    try {
-      const res = await api.post('/users', {...this.state});
-      console.log(res.data)
-      return res.data;
-    } catch (error) {
-      console.log('error:', error);
+        try {
+          const res = await api.post('/users', {email, name, password});
+          console.log(res.data)
+          return res.data;
+        } catch (error) {
+          console.log('error:', error);
+        }
     }
-}
 
-  render () {
+
   return( 
     <>
       <Image style={styles.avatar} source={{ uri: 'https://api.adorable.io/avatars/400/abott@adorable.io.png'}} />
@@ -33,7 +29,8 @@ class SignUp extends Component{
             autoCapitalize="words"
             autoCorrect={false}
             required
-            // value={this.state.email}
+            value={email}
+            onChangeText={(email) => { setEmail(email)}}
           />
       </View>
 
@@ -45,7 +42,8 @@ class SignUp extends Component{
             autoCapitalize="words"
             autoCorrect={false}
             required
-            // value={name}
+            value={name}
+            onChangeText={(name) => { setName(name)}}
           />
       </View>
 
@@ -57,7 +55,8 @@ class SignUp extends Component{
             autoCapitalize="words"
             autoCorrect={false}
             required
-            // value={password}
+            value={password}
+            onChangeText={(password) => { setPassword(password)}} 
           />
       </View>
 
@@ -68,11 +67,10 @@ class SignUp extends Component{
       <TouchableOpacity style={styles.loadSingUp}  onPress={this.onRequest}>  
         <Text  size={30} color="#fff">Criar Conta</Text>
       </TouchableOpacity>
-  </>
-    );
-}}
+    </>
+  );
+}
 
-export default SignUp;
 const styles = StyleSheet.create({
   avatar: {
     width: 200,
@@ -157,3 +155,34 @@ const styles = StyleSheet.create({
     marginLeft: 15
   }
 });
+
+// class SignUp extends Component{
+  
+  //   constructor(props) {
+  //     super(props)
+  
+  //       this.state = {
+  //           email: '',
+  //           name: '',
+  //           password: '',
+  //       }
+  //   } 
+  //   // state = {
+  //   //   email,
+  //   //   name,
+  //   //   password,
+  //   //   // avatar_url,
+      
+  //   // }
+  
+  //   onRequest = async () => {
+  //     try {
+  //       const res = await api.post('/users', {...this.state});
+  //       console.log(res.data)
+  //       return res.data;
+  //     } catch (error) {
+  //       console.log('error:', error);
+  //     }
+  // }
+  
+  //   render () {
