@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
-// import api from '../services/api';
+import api from '../services/api';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
 
 function SignIn({ navigation }) {
-  // const [name, setName] = useState('');
-  // const [password, setPassword] = useState('');
-  
-  // async function newUser() {
-  //   const response = await api.post('/users', {
-  //     name,
-  //     password,
-  //    });
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
 
-  //   console.log(response.data.users);
-  //   response.data.users;
-  // }
+  onRequest = async () => {
+    try {
+      const res = await api.post('/users', {name, password});
+      console.log(res.data)
+      return res.data;
+    } catch (error) {
+      console.log('error:', error);
+    }
+}
 
   return( 
     <>
@@ -26,8 +26,8 @@ function SignIn({ navigation }) {
             autoCapitalize="words"
             autoCorrect={false}
             required
-            // value={name}
-            // onChange={setName}
+            value={name}
+            onChangeText={(name) => { setName(name)}}
           />
       </View>
 
@@ -39,8 +39,8 @@ function SignIn({ navigation }) {
             autoCapitalize="words"
             autoCorrect={false}
             required
-            // value={password}
-            // onChange={setPassword}
+            value={password}
+            onChangeText={(password) => { setPassword(password)}} 
           />
       </View>
 
@@ -48,7 +48,7 @@ function SignIn({ navigation }) {
         <Text  size={30} color="#fff">Criar conta</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.loadSingUp}  onPress={() => navigation.navigate('Main')}>  
+      <TouchableOpacity style={styles.loadSingUp}  onPress={this.onRequest}>  
         <Text  size={30} color="#fff">Entrar</Text>
       </TouchableOpacity>
   </>
